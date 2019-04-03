@@ -6,8 +6,11 @@ export default class View {
     this.menuElement.addEventListener(
       'click', 
       _ => {
-        const main = document.getElementById('main-view'); 
-        document.body.replaceChild(this.mainElement, main);
+        const main = document.getElementById('main-view');
+
+        // Block against swapping to current view
+        if (main !== this.mainElement)
+          document.body.replaceChild(this.mainElement, main);
       }
     );
 

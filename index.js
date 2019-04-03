@@ -10,8 +10,7 @@ const modules = {
 
 const view_items = document.getElementById('view-items');
 
-for (let module in modules) {
+for (let module in modules)
   view_items.appendChild(modules[module].menuElement);
-}
 
 document.body.appendChild(modules['home'].mainElement);
