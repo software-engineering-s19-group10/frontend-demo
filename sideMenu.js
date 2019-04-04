@@ -11,7 +11,7 @@ window.onload = function() {
 
     var main = document.getElementById('main-view');
     var sideMenu = document.getElementById('side-menu');
-    var touchStart, touchEnd;
+    var touchStart, touchEnd, isAnimating;
 
     // Main view default position when loaded in mobile view (NEED FIX : ONLY CHANGES 1 OF THE MODULES)
     main.style.left = '-180px';
@@ -23,36 +23,11 @@ window.onload = function() {
     sideMenu.style.left = '-180px'; 
 
     sideMenu.addEventListener('touchend', function(ev) {
+      if (touchStart.pageX - touchEnd.pageX < 1 && !isAnimating) // Menu Open
+        window.requestAnimationFrame(animateOpen);
 
-      if ( touchStart.pageX - touchEnd.pageX < 1) { // Menu Open
-        
-        let pos = parseInt(sideMenu.style.left); // Current position
-        let id = setInterval(frame, 1);
-
-        function frame() { // Animation Open
-          if (pos == 0) {
-            clearInterval(id);
-          } else {
-            pos++;
-            sideMenu.style.left = pos + "px";
-          }
-        }
-      }
-
-      if ( touchStart.pageX - touchEnd.pageX > 1) { // Menu Close
-
-        let pos = parseInt(sideMenu.style.left); // Current position
-        let id = setInterval(frame, 1);
-
-        function frame() { // Animation Close
-          if (pos == -180) {
-            clearInterval(id);
-          } else {
-            pos--; 
-            sideMenu.style.left = pos + "px";
-          }
-        }
-      }
+      if (touchStart.pageX - touchEnd.pageX > 1 && !isAnimating)
+        window.requestAnimationFrame(animateClose); // Menu Close
     })
 
     sideMenu.addEventListener('touchstart', function(ev) { // Get start touch position
@@ -63,14 +38,46 @@ window.onload = function() {
       touchEnd = ev.targetTouches[0]; // Updates touchEnd with current touch position until let go
 
       // Moves the side menu with the finger.
-      if (parseInt(sideMenu.style.left) >= -180 && parseInt(sideMenu.style.left) <= 0)
+      if (parseInt(sideMenu.style.left) >= -180 && parseInt(sideMenu.style.left) <= 0 && !isAnimating)
         sideMenu.style.left = (touchEnd.clientX - sideMenu.offsetWidth) + 'px';
 
       if (parseInt(sideMenu.style.left) < -180) // Detects over shoot and corrects it
-        sideMenu.style.left = '180px';
+        sideMenu.style.left = '-180px';
 
       if (parseInt(sideMenu.style.left) > 0) // Detects over shoot and corrects it
         sideMenu.style.left = '0px';
     })
+  }
+
+  function animateOpen() {
+    isAnimating = true;
+    let pos = parseInt(sideMenu.style.left); // Current position
+    let id = setInterval(frame, 1);
+
+    function frame() { // Animation Open
+      if (pos == 0) {
+        clearInterval(id);
+        isAnimating = false;
+      } else {
+        pos++;
+        sideMenu.style.left = pos + "px";
+      }
+    }
+  }
+
+  function animateClose() {
+    isAnimating = true;
+    let pos = parseInt(sideMenu.style.left); // Current position
+    let id = setInterval(frame, 1);
+  
+    function frame() { // Animation Close
+      if (pos == -180) {
+        clearInterval(id);
+        isAnimating = false;
+      } else {
+        pos--; 
+        sideMenu.style.left = pos + "px";
+      }
+    }
   }
 }
