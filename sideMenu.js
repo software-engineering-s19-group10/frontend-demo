@@ -67,7 +67,7 @@ window.onload = function() {
         sideMenu.style.left = (touchEnd.clientX - sideMenu.offsetWidth) + 'px';
 
       if (parseInt(sideMenu.style.left) < -180) // Detects over shoot and corrects it
-        sideMenu.style.left = '180px';
+        sideMenu.style.left = '-180px';
 
       if (parseInt(sideMenu.style.left) > 0) // Detects over shoot and corrects it
         sideMenu.style.left = '0px';
