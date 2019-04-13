@@ -1,16 +1,18 @@
-import HomeView from './modules/home.js'
-import VisitorView from './modules/visitor.js'
-import StatisticsView from './modules/statistics.js'
+const module_names = [
+  'home',
+  'visitor',
+  'statistics',
+];
 
-const modules = {
-  'home': new HomeView(),
-  'visitor': new VisitorView(),
-  'statistics': new StatisticsView(),
-};
+const module_promises = 
+  module_names.map(name => import(`./modules/${name}.js`));
 
-const view_items = document.getElementById('view-items');
+const module_instances = Promise.all(module_promises)
+  .then(module => new module.default());
 
-for (let module in modules)
-  view_items.appendChild(modules[module].menuElement);
+// const view_items = document.getElementById('view-items');
 
-document.body.appendChild(modules['home'].mainElement);
+// for (let module in modules)
+//   view_items.appendChild(modules[module].menuElement);
+
+// document.body.appendChild(modules['home'].mainElement);
