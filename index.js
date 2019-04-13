@@ -2,15 +2,27 @@ import HomeView from './modules/home.js'
 import VisitorView from './modules/visitor.js'
 import StatisticsView from './modules/statistics.js'
 
-const modules = {
-  'home': new HomeView(),
-  'visitor': new VisitorView(),
-  'statistics': new StatisticsView(),
-};
+if (sessionStorage.getItem('token') == null)
+  window.location.replace('/login.html');  // Redirect to the login page
+else {
+  const modules = {
+    'home': new HomeView(),
+    'visitor': new VisitorView(),
+    'statistics': new StatisticsView(),
+  };
 
-const view_items = document.getElementById('view-items');
+  const menu_nav = document.createElement('nav');
+  menu_nav.setAttribute('id', 'side-menu');
 
-for (let module in modules)
-  view_items.appendChild(modules[module].menuElement);
+  const menu_list = document.createElement('ul');
+  menu_list.setAttribute('id', 'view-items');
 
-document.body.appendChild(modules['home'].mainElement);
+  for (let module in modules)
+    menu_list.appendChild(modules[module].menuElement);
+
+  menu_nav.appendChild(menu_list);
+
+  document.body.appendChild(menu_nav);
+
+  document.body.appendChild(modules['home'].mainElement);
+}
