@@ -30,7 +30,7 @@ main.appendChild(document.createElement('br'));
 
 const loginButton = document.createElement('button');
 loginButton.appendChild(document.createTextNode('Login'));
-loginButton.addEventListener('click', () => 
+loginButton.addEventListener('click', () =>
   fetch('https://boiling-reef-89836.herokuapp.com/lock_owners/api/authenticate/', {
     method: 'POST',
     body: JSON.stringify({ username: usernameInput.value, password: passwordInput.value }),
