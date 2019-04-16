@@ -7,11 +7,11 @@ window.onload = function() {
     return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
   }; console.log("Mobile:", isMobileDevice()); 
 
-  if (isMobileDevice()){ // Only works for mobile devices
+  if (isMobileDevice()){ // Mobile only!
 
     var main = document.getElementById('main-view');
     var sideMenu = document.getElementById('side-menu');
-    var touchStart, touchEnd, isAnimating;
+    var current, isAnimating;
 
     // Main view default position when loaded in mobile view (NEED FIX : ONLY CHANGES 1 OF THE MODULES)
     main.style.left = '-180px';
@@ -22,39 +22,28 @@ window.onload = function() {
     // Side menu default position when loaded in mobile view
     sideMenu.style.left = '-180px'; 
 
-    sideMenu.addEventListener('touchend', function(ev) {
-      if (touchStart.pageX - touchEnd.pageX < 1 && !isAnimating) // Menu Open
+    sideMenu.addEventListener('touchend', function(ev) { // End touch event listener
+      if (parseInt(sideMenu.style.left) > -90) { // Opens menu when moved to over 50%
         window.requestAnimationFrame(animateOpen);
+      }
 
-      if (touchStart.pageX - touchEnd.pageX > 1 && !isAnimating)
-        window.requestAnimationFrame(animateClose); // Menu Close
+      if (parseInt(sideMenu.style.left) <= -90) { // Closes menu when moved to under 50%
+        window.requestAnimationFrame(animateClose);
+      }
     })
 
-    sideMenu.addEventListener('touchstart', function(ev) { // Get start touch position
-      touchStart = ev.targetTouches[0];
-    })
-
-    sideMenu.addEventListener('touchmove', function(ev) { // Get current touch position
-      touchEnd = ev.targetTouches[0]; // Updates touchEnd with current touch position until let go
-
-      // Moves the side menu with the finger.
-      if (parseInt(sideMenu.style.left) >= -180 && parseInt(sideMenu.style.left) <= 0 && !isAnimating)
-        sideMenu.style.left = (touchEnd.clientX - sideMenu.offsetWidth) + 'px';
-
-      if (parseInt(sideMenu.style.left) < -180) // Detects over shoot and corrects it
-        sideMenu.style.left = '-180px';
-
-      if (parseInt(sideMenu.style.left) > 0) // Detects over shoot and corrects it
-        sideMenu.style.left = '0px';
+    sideMenu.addEventListener('touchmove', function(ev) { // Active touch event listener
+      current = ev.targetTouches[0]; // Updates current touch position
+      window.requestAnimationFrame(moveWithFinger);
     })
   }
 
-  function animateOpen() {
+  function animateOpen() { // Menu opening animation
     isAnimating = true;
-    let pos = parseInt(sideMenu.style.left); // Current position
+    let pos = parseInt(sideMenu.style.left);
     let id = setInterval(frame, 1);
 
-    function frame() { // Animation Open
+    function frame() { // Animate
       if (pos == 0) {
         clearInterval(id);
         isAnimating = false;
@@ -65,12 +54,12 @@ window.onload = function() {
     }
   }
 
-  function animateClose() {
+  function animateClose() { // Menu closing animation
     isAnimating = true;
-    let pos = parseInt(sideMenu.style.left); // Current position
+    let pos = parseInt(sideMenu.style.left);
     let id = setInterval(frame, 1);
   
-    function frame() { // Animation Close
+    function frame() { // Animate
       if (pos == -180) {
         clearInterval(id);
         isAnimating = false;
@@ -79,5 +68,16 @@ window.onload = function() {
         sideMenu.style.left = pos + "px";
       }
     }
+  }
+
+  function moveWithFinger() { // Moves the side menu with the finger.
+    if (parseInt(sideMenu.style.left) >= -180 && parseInt(sideMenu.style.left) <= 0 && !isAnimating)
+      sideMenu.style.left = (current.clientX - sideMenu.offsetWidth) + 'px';
+
+    if (parseInt(sideMenu.style.left) < -180) // Prevents over shoot
+      sideMenu.style.left = '-180px';
+
+    if (parseInt(sideMenu.style.left) > 0) // Prevents over shoot
+      sideMenu.style.left = '0px';
   }
 }
