@@ -1,6 +1,7 @@
 import HomeView from './modules/home.js'
 import VisitorView from './modules/visitor.js'
 import StatisticsView from './modules/statistics.js'
+import SRNView from './modules/srnView.js';
 
 if (sessionStorage.getItem('token') == null)
   window.location.replace('/login.html');  // Redirect to the login page
@@ -9,6 +10,7 @@ else {
     'home': new HomeView(),
     'visitor': new VisitorView(),
     'statistics': new StatisticsView(),
+    'stranger_report': new SRNView(),
   };
 
   const menu_nav = document.createElement('nav');
