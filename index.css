@@ -1,3 +1,4 @@
+/* == Desktop == */
 body {
   display: grid;
 
@@ -28,6 +29,7 @@ nav ul li {
   font-size: 2em;
 
   cursor: pointer;
+  user-select: none;
 }
 
 nav ul li:hover {
@@ -36,4 +38,44 @@ nav ul li:hover {
 
 main {
   margin: 10px;
+}
+
+/* == Mobile == */
+@media only screen and (max-width: 1280px) {
+  nav {
+    position: relative;
+    height: 100vh;
+  
+    background-color:rgb(33, 33, 33);
+    color: rgb(222, 222, 222);
+  }
+  
+  nav ul {
+    list-style-type: none;
+  
+    margin: 0;
+    padding-left: 0; 
+  }
+  
+  nav ul li {
+    padding: 5px;
+  
+    font-family: 'sans';
+    font-size: 2em;
+  
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  nav ul li:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  main {
+    position: absolute;
+    z-index: -1;
+    margin: 10px;
+    left: 20px;
+    width: 90%;
+  }
 }
