@@ -1,13 +1,16 @@
+//import <name>View from './modules/<name>.js'
 import HomeView from './modules/home.js'
 import VisitorView from './modules/visitor.js'
 import StatisticsView from './modules/statistics.js'
-import EventFeedView from './modules/eventFeed.js';
+import EventFeedView from './modules/eventFeed.js'
+import ResidentsView from './modules/residents.js'
 
 if (sessionStorage.getItem('token') == null)
   window.location.replace('/login.html');  // Redirect to the login page
 else {
   const modules = {
     'home': new HomeView(),
+    'residents': new ResidentsView(),
     'visitor': new VisitorView(),
     'events': new EventFeedView(),
     'statistics': new StatisticsView(),
