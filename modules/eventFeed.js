@@ -37,6 +37,7 @@ export default class EventFeedView extends BaseView {
       this.mainElement.appendChild(document.createElement("hr"));
       for (let i = 0; i < events.length; i++) {
         let div = document.createElement("div");
+        div.setAttribute("id", "event-div-" + events[i].id);
         let eventSpan1 = document.createElement("div");
         let lockId = document.createElement("p");
         lockId.setAttribute("style", "display: inline-block; padding-right: 150px");
@@ -61,6 +62,21 @@ export default class EventFeedView extends BaseView {
         eventSpan2.appendChild(timestamp);
         eventSpan2.appendChild(duration);
         div.appendChild(eventSpan2);
+
+        let dismissButton = document.createElement("button");
+        dismissButton.setAttribute("type", "button");
+        dismissButton.setAttribute("id", "dismiss-" + events[i].id);
+        dismissButton.addEventListener("click", (event) => {
+          const id = parseInt(event.target.id.split("-")[1]);
+          console.log("Clicked on button " + id);
+          let div = document.getElementById("event-div-" + id);
+          div.remove();
+          fetch("https://boiling-reef-89836.herokuapp.com/lock_owners/api/events/" + id + "/", {
+            method: "DELETE"
+          });
+        });
+        dismissButton.appendChild(document.createTextNode("Dismiss"));
+        div.appendChild(dismissButton);
 
         this.mainElement.appendChild(div);
         this.mainElement.appendChild(document.createElement("hr"));
