@@ -1,13 +1,13 @@
 // Mobile Side Bar Swipe Functionality
 // IMPORTANT NOTE: When using the inspector view, will not update between mobile/desktop unless REFRESH!
 
-window.onload = function() {
+window.onload = function () {
 
   function isMobileDevice() { // Checks if 'window.orientation' exists
     return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-  }; console.log("Mobile:", isMobileDevice()); 
+  }; console.log("Mobile:", isMobileDevice());
 
-  if (isMobileDevice()){ // Only works for mobile devices
+  if (isMobileDevice()) { // Only works for mobile devices
 
     var main = document.getElementById('main-view');
     var sideMenu = document.getElementById('side-menu');
@@ -20,9 +20,9 @@ window.onload = function() {
     main.style.width = '300px'; // Set width. (NEED FIX: SHOULD FILL ENTIRE WIDTH)
 
     // Side menu default position when loaded in mobile view
-    sideMenu.style.left = '-180px'; 
+    sideMenu.style.left = '-180px';
 
-    sideMenu.addEventListener('touchend', function(ev) {
+    sideMenu.addEventListener('touchend', function (ev) {
       if (touchStart.pageX - touchEnd.pageX < 1 && !isAnimating) // Menu Open
         window.requestAnimationFrame(animateOpen);
 
@@ -30,11 +30,11 @@ window.onload = function() {
         window.requestAnimationFrame(animateClose); // Menu Close
     })
 
-    sideMenu.addEventListener('touchstart', function(ev) { // Get start touch position
+    sideMenu.addEventListener('touchstart', function (ev) { // Get start touch position
       touchStart = ev.targetTouches[0];
     })
 
-    sideMenu.addEventListener('touchmove', function(ev) { // Get current touch position
+    sideMenu.addEventListener('touchmove', function (ev) { // Get current touch position
       touchEnd = ev.targetTouches[0]; // Updates touchEnd with current touch position until let go
 
       // Moves the side menu with the finger.
@@ -69,13 +69,13 @@ window.onload = function() {
     isAnimating = true;
     let pos = parseInt(sideMenu.style.left); // Current position
     let id = setInterval(frame, 1);
-  
+
     function frame() { // Animation Close
       if (pos == -180) {
         clearInterval(id);
         isAnimating = false;
       } else {
-        pos--; 
+        pos--;
         sideMenu.style.left = pos + "px";
       }
     }
