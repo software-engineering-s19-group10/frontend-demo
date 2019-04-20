@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Smart Lock | Visitor Authentication</title>
+    <script src="lib/VanillaQR.js"></script>
+  </head>
+  <body>
+    <h1>Smart Lock Visitor Code</h1>
+    <div id="container"></div>
+    <script>
+      const HOST = 'https://boiling-reef-89836.herokuapp.com/',
+            ENDPOINT = 'lock_owners/api/temp_auth';
+
+      const code_container = document.getElementById('container');
+
+      const params = new URLSearchParams(window.location.search);
+
+      const door_id = params.get("door"),
+            visitor_id = params.get("visitor");
+
+      fetch(`${HOST}${ENDPOINT}/get_code/?id=${visitor_id}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data['status'] == 200) {
+            const unlock_key = data['auth_code'];
+            const qr = new VanillaQR({
+              url: unlock_key,
+              size: 300,
+              colorLight: "#FFFFFF",
+              colorDark: "#000000"
+            });
+            code_container.append(qr.domElement);
+
+            code_text = document.createElement('p')
+            code_text.appendChild(document.createTextNode(unlock_key));
+            code_container.append(code_text);
+          } else {
+            const error_message = document.createElement('p');
+            error_message.appendChild(document.createTextNode("Error: " + data['message']));
+            code_container.appendChild(error_message);
+          }
+        });
+    </script>
+  </body>
+</html>
