@@ -8,10 +8,6 @@
   </head>
   <body>
     <h1>Smart Lock Visitor Code</h1>
-    <p>
-      This is an example of what a visitor would be presented with to
-      unlock the door.
-    </p>
     <div id="container"></div>
     <script>
       const HOST = 'https://boiling-reef-89836.herokuapp.com/',
@@ -25,21 +21,26 @@
             visitor_id = params.get("visitor");
 
       fetch(`${HOST}${ENDPOINT}/get_code/?id=${visitor_id}`)
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => {
-          console.log(data);
-          const unlock_key = data['auth_code'];
-          const qr = new VanillaQR({
-            url: unlock_key,
-            size: 300,
-            colorLight: "#FFFFFF",
-            colorDark: "#000000"
-          });
-          code_container.append(qr.domElement);
+          if (data['status'] == 200) {
+            const unlock_key = data['auth_code'];
+            const qr = new VanillaQR({
+              url: unlock_key,
+              size: 300,
+              colorLight: "#FFFFFF",
+              colorDark: "#000000"
+            });
+            code_container.append(qr.domElement);
 
-          code_text = document.createElement('p')
-          code_text.appendChild(document.createTextNode(unlock_key));
-          code_container.append(code_text);
+            code_text = document.createElement('p')
+            code_text.appendChild(document.createTextNode(unlock_key));
+            code_container.append(code_text);
+          } else {
+            const error_message = document.createElement('p');
+            error_message.appendChild(document.createTextNode("Error: " + data['message']));
+            code_container.appendChild(error_message);
+          }
         });
     </script>
   </body>
