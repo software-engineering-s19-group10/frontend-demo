@@ -2,25 +2,35 @@ import BaseView from './baseView.js'
 
 export default class SRNView extends BaseView {
   constructor() {
-    super('SRN');
+    super('Stranger Report Map');
   }
 
   initMainElement() {
+
+    // Booleans to let us know if jQuery and GMaps has loaded
+    let hasJQuery = false;
+    let hasGmaps = false;
+
+    // Create the div 
     const map = document.createElement('div');
-    map.id = "id";
+    map.id = "map";
+    map.style= "width: 500px; height: 500px;";
+    this.mainElement.appendChild(map);
 
-    <script type="text/javascript" src="map_renderer.js"></script>
+    async function wait() {
+      while(!document.querySelector("#map")) {
+        await new Promise(r => setTimeout(r, 500));
+      }
+    };
+   
+    wait();
 
-    const jquery = document.createElement('script');
-    jquery.src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js";
-    
-    const gmaps = document.createElement('script');
-    gmaps.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCJ-Cp4XenVRBBFGG0tjGpxO7acJOssols&libraries=visualization";
-    
+    // Add the map_renderer script
     const map_renderer = document.createElement('script');
     map_renderer.type = "text/javascript";
     map_renderer.src = "helper_scripts/map_renderer.js";
 
-    this.mainElement.appendChild(message);
+    this.mainElement.appendChild(map_renderer);
+
   }
 }

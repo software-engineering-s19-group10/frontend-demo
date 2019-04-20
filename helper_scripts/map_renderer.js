@@ -76,7 +76,7 @@ $(document).ready(function() {
 
             // the api url to get data
             // replace this with whatever we use
-            let dataURL = "https://b8cf0f93.ngrok.io/lock_owners/api/srn/";
+            let dataURL = "https://boiling-reef-89836.herokuapp.com/lock_owners/api/srn/";
             
             $.ajax({
                 url: dataURL,
@@ -93,4 +93,4 @@ $(document).ready(function() {
               }); 
         }
     );
-});
+})
