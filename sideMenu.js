@@ -33,7 +33,7 @@ window.onload = function() {
       })
 
       items.addEventListener('click', function() { // Close Menu on item click.
-        if (window.innerWidth < 768)
+        if (window.innerWidth <= 768)
           animateClose();
       })
 
@@ -42,14 +42,14 @@ window.onload = function() {
       Sidebar will collapse like in mobile.
       */
       sideMenu.addEventListener('mouseenter', function() { // Mouse enter event listener.
-        if (window.innerWidth < 768){
+        if (window.innerWidth <= 768){
           cancelClose = true;
           animateOpen();
         }
       })
 
       sideMenu.addEventListener('mouseleave', function() { // Mouse leave event listener.
-        if (window.innerWidth < 768){
+        if (window.innerWidth <= 768){
           cancelOpen = true;
           animateClose();
         }
