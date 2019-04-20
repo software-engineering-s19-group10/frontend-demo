@@ -1,4 +1,7 @@
-import BaseView from "./baseView.js";
+import BaseView from './baseView.js';
+
+const HOST = 'https://boiling-reef-89836.herokuapp.com/',
+      ENDPOINT = 'lock_owners/api/events/';
 
 export default class EventFeedView extends BaseView {
   constructor() {
@@ -6,81 +9,74 @@ export default class EventFeedView extends BaseView {
 
     this.events = null;
 
-    this.getEvents = this.getEvents.bind(this);
-    this.render = this.render.bind(this);
-  }
-
-  initMainElement() {
-    const message = document.createElement("p");
-    message.appendChild(document.createTextNode("This is the event feed"));
-    this.mainElement.appendChild(message);
-
     this.getEvents();
   }
 
+  initMainElement() {
+    const message = document.createElement('p');
+    message.appendChild(document.createTextNode('This is the event feed'));
+    
+    this.mainElement.appendChild(message);
+
+    const event_table = document.createElement('table'),
+          event_table_body = this.table_body = document.createElement('tbody'),
+          event_table_head = document.createElement('thead'),
+          event_table_head_row = document.createElement('tr');
+
+    for (let column_name of ['Lock ID', 'Type', 'Time', 'Duration', 'Options']) {
+      const column_header = document.createElement('td');
+      column_header.appendChild(document.createTextNode(column_name));
+      event_table_head_row.appendChild(column_header);
+    }
+
+    event_table_head.appendChild(event_table_head_row);
+
+    event_table.appendChild(event_table_head);
+    event_table.appendChild(event_table_body);
+
+    this.mainElement.appendChild(event_table);
+  }
+
   getEvents() {
-    const userId = sessionStorage.getItem("userId");
-    fetch("https://boiling-reef-89836.herokuapp.com/lock_owners/api/events/user/?owner=" + userId)
+    const userId = sessionStorage.getItem('userId');
+    fetch(`${HOST}${ENDPOINT}user/?owner=${userId}`)
       .then(response => response.json())
       .then(response => {
-        if (response.status === 200) {
+        if (response.status == 200) {
           this.events = response.data;
-          console.log(this.events);
-          this.render();
+          this.updateTable();
         }
       });
   }
 
-  render() {
-    if (this.events !== null) {
-      let events = this.events;
-      this.mainElement.appendChild(document.createElement("hr"));
-      for (let i = 0; i < events.length; i++) {
-        let div = document.createElement("div");
-        div.setAttribute("id", "event-div-" + events[i].id);
-        let eventSpan1 = document.createElement("div");
-        let lockId = document.createElement("p");
-        lockId.setAttribute("style", "display: inline-block; padding-right: 150px");
-        lockId.appendChild(document.createTextNode("Lock #" + events[i].lock));
-        let eventType = document.createElement("p");
-        eventType.appendChild(document.createTextNode("Type: " + events[i].event_type));
-        eventType.setAttribute("style", "display: inline-block")
+  dismissEvent(event_id) {
+    fetch(`${HOST}${ENDPOINT}${event_id}/`, { method: 'DELETE' });
+  }
 
-        eventSpan1.appendChild(lockId);
-        eventSpan1.appendChild(eventType);
-        div.appendChild(eventSpan1);
+  updateTable() {
+    for (let event of this.events) {
+      const event_row = document.createElement('tr');
 
-        let eventSpan2 = document.createElement("div");
-        let timestamp = document.createElement("p");
-        timestamp.appendChild(document.createTextNode("Time: " + events[i].timestamp));
-        timestamp.setAttribute("style", "display: inline-block; padding-right: 150px");
+      for (let key of ['lock', 'event_type', 'timestamp', 'duration']) {
+        const event_data = document.createElement('td');
+        event_data.appendChild(document.createTextNode(event[key]));
 
-        let duration = document.createElement("p");
-        duration.appendChild(document.createTextNode("Duration: " + events[i].duration + " seconds"));
-        duration.setAttribute("style", "display: inline-block");
-
-        eventSpan2.appendChild(timestamp);
-        eventSpan2.appendChild(duration);
-        div.appendChild(eventSpan2);
-
-        let dismissButton = document.createElement("button");
-        dismissButton.setAttribute("type", "button");
-        dismissButton.setAttribute("id", "dismiss-" + events[i].id);
-        dismissButton.addEventListener("click", (event) => {
-          const id = parseInt(event.target.id.split("-")[1]);
-          console.log("Clicked on button " + id);
-          let div = document.getElementById("event-div-" + id);
-          div.remove();
-          fetch("https://boiling-reef-89836.herokuapp.com/lock_owners/api/events/" + id + "/", {
-            method: "DELETE"
-          });
-        });
-        dismissButton.appendChild(document.createTextNode("Dismiss"));
-        div.appendChild(dismissButton);
-
-        this.mainElement.appendChild(div);
-        this.mainElement.appendChild(document.createElement("hr"));
+        event_row.appendChild(event_data);
       }
+
+      const event_id = event.id;
+
+      const dismissButton = document.createElement('button');
+      dismissButton.appendChild(document.createTextNode('Dismiss'));
+      dismissButton.addEventListener('click', () => {
+        console.log(`Clicked on button ${event_id}`);
+        event_row.remove();
+        this.dismissEvent(event_id);
+      });
+
+      event_row.appendChild(dismissButton);
+
+      this.table_body.appendChild(event_row);
     }
   }
 }
