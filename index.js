@@ -1,7 +1,12 @@
 import HomeView from './modules/home.js'
 import VisitorView from './modules/visitor.js'
 import StatisticsView from './modules/statistics.js'
+<<<<<<< HEAD
 import EventFeedView from './modules/eventFeed.js';
+=======
+import SRNView from './modules/srnView.js';
+import videoView from './modules/videoView.js';
+>>>>>>> local
 
 if (sessionStorage.getItem('token') == null)
   window.location.replace('/login.html');  // Redirect to the login page
@@ -11,6 +16,8 @@ else {
     'visitor': new VisitorView(),
     'events': new EventFeedView(),
     'statistics': new StatisticsView(),
+    'stranger_report': new SRNView(),
+    'video_feed': new videoView()
   };
 
   const menu_nav = document.createElement('nav');
