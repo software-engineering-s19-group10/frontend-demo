@@ -28,6 +28,10 @@ export default class videoView extends BaseView {
     playButton.type = "button";
     playButton.id = "play-btn";
     playButton.value = "Pause"
+    playButton.textContent = "Pause";
+
+    playButton.style.width = '50em'; // setting the width 
+    playButton.style.height = '5em'; // setting the height 
     this.mainElement.appendChild(playButton);
    
     wait("#play-btn");
