@@ -5,6 +5,7 @@
 
 html {
   font-family: "customFont", "Ubuntu-R", serif;
+  user-select: none;
 }
 
 body{
