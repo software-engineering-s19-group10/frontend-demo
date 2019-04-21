@@ -1,4 +1,18 @@
 /* == Desktop == */
+@font-face {
+  font-family: "customFont";
+  src: url("customFont/Ubuntu-R.ttf"); /* https://design.ubuntu.com/font/ */
+}
+
+html {
+  font-family: "customFont", "Ubuntu-R", serif;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 body {
   display: grid;
 
@@ -11,22 +25,26 @@ nav {
   position: relative;
   height: 100vh;
 
-  background-color:rgb(33, 33, 33);
+  background: rgb(66, 74, 77);
   color: rgb(222, 222, 222);
+
+  box-shadow: 10px 0 10px rgba(0,0,0,0.25);
 }
 
 nav ul {
   list-style-type: none;
 
-  margin: 0;
-  padding-left: 0; 
+  margin: 5%;
+  padding: 0; 
 }
 
 nav ul li {
   padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 
-  font-family: 'sans';
-  font-size: 2em;
+  font-family: "customFont", "Ubuntu-R", serif;
+  font-size: 25px;
 
   cursor: pointer;
   user-select: none;
@@ -37,45 +55,46 @@ nav ul li:hover {
 }
 
 main {
-  margin: 10px;
+  margin: auto;
+  margin-top: 10px;
 }
 
 /* == Mobile == */
 @media only screen and (max-width: 768px) {
   nav {
-    position: relative;
-    height: 100vh;
-  
     z-index: 1;
-    background-color:rgb(33, 33, 33);
-    color: rgb(222, 222, 222);
-  }
-  
-  nav ul {
-    list-style-type: none;
-  
-    margin: 0;
-    padding-left: 0; 
-  }
-  
-  nav ul li {
-    padding: 5px;
-  
-    font-family: 'sans';
-    font-size: 2em;
-  
-    cursor: pointer;
-    user-select: none;
-  }
-  
-  nav ul li:hover {
-    background-color: rgba(255, 255, 255, 0.2);
   }
   
   main {
     display: inline;
     position: absolute;
-    margin: 10px;
+    margin: 20px;
     left: 20px;
   }
 }
+
+
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+thead {
+  background-color: rgb(66, 74, 77);
+  color: white;
+}
+
+thead, tbody {
+  text-align: left;
+  padding: 8px;
+}
+
+td{
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
