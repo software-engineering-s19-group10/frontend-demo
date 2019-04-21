@@ -1,0 +1,397 @@
+@font-face {
+  font-family: "customFont";
+  src: url("customFont/Ubuntu-R.ttf"); /* https://design.ubuntu.com/font/ */
+}
+
+html {
+  font-family: "customFont", "Ubuntu-R", serif;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+body {
+  display: block;
+  margin: auto;
+  text-align: center;
+
+  background: #aab2b5;
+  margin: auto;
+}
+
+img {
+  position: relative;
+  width: 22%;
+  padding: 3%;
+}
+
+p {
+  font-weight: bold;
+  font-size: 200%;
+}
+
+label {
+  font-size: 120%;
+}
+
+input {
+  display: block;
+  margin: auto;
+  text-align: center;
+  width: 75%;
+}
+
+.card {
+  background: rgb(99, 111, 114);
+  color: white;
+  border-radius: 2px;
+  margin: auto;
+  padding: 0.5%;
+  width: 35%;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+
+/* == Mobile == */
+@media only screen and (max-width: 768px) {
+  .honeywarp {
+    display: none;
+    position: absolute;
+  }
+
+  .card {
+    background: rgb(99, 111, 114);
+    color: white;
+    border-radius: 2px;
+    margin: auto;
+    padding: 2%;
+    width: calc(100% - 4%);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  }
+
+  img{
+    margin-top: 10%;
+    width: 50%;
+    padding: 3%;
+  }
+}
+
+
+/* 3D Button By: https://codepen.io/kanishkkunal/pen/KwpGNa*/
+
+button {
+  outline: none;                                /* [Added] Remove outline on click */
+  font-family: "customFont", "Ubuntu-R", serif; /* [Added] Change font */
+  font-size: 120%;                              /* [Added] Increase font size */
+  font-weight: bold;                            /* [Added] Change font weight*/
+
+  position:relative;
+  width: auto;
+  display:inline-block;
+  color:#ecf0f1;
+  text-decoration:none;
+  border-radius:5px;
+  border:solid 1px #f39c12;
+  background:#e67e22;
+  text-align:center;
+  padding:16px 18px 14px;
+  margin: 12px;
+  
+  -webkit-transition: all 0.1s;
+	-moz-transition: all 0.1s;
+	transition: all 0.1s;
+	
+  -webkit-box-shadow: 0px 6px 0px #d35400;
+  -moz-box-shadow: 0px 6px 0px #d35400;
+  box-shadow: 0px 6px 0px #d35400;
+}
+
+button:active{
+    -webkit-box-shadow: 0px 2px 0px #d35400;
+    -moz-box-shadow: 0px 2px 0px #d35400;
+    box-shadow: 0px 2px 0px #d35400;
+    position:relative;
+    top:4px;
+}
+
+/* Honeycomb Background By: https://codepen.io/careyhuffman/pen/Fvdjq */
+
+#honeywarp {
+  z-index: -1; /* [Added] Push background behind everything else */
+
+  width: 335px;
+  height: 661px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  overflow: hidden;
+}
+
+.honeycomb {
+  margin: 0 45px;
+  width: 89px;
+  height: 154px;
+  background-color: white;
+  position: absolute;
+  position: absolute;
+  opacity: 0.5;
+}
+.honeycomb:before {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-right: 45px solid white;
+  border-top: 77px solid transparent;
+  border-bottom: 77px solid transparent;
+  position: absolute;
+  left: -45px;
+}
+.honeycomb:after {
+  content: "";
+  width: 0;
+  position: absolute;
+  right: -45px;
+  border-left: 45px solid white;
+  border-top: 77px solid transparent;
+  border-bottom: 77px solid transparent;
+}
+
+.type1 {
+  box-shadow: 0px 0px 0px white;
+  opacity: 0.1;
+}
+
+.type2 {
+  box-shadow: 0px 0px 10px white;
+  opacity: 0.3;
+}
+
+.type3 {
+  box-shadow: 0px 0px 20px white;
+  opacity: 0.5;
+}
+
+.terminal_honeycomb1 {
+  left: 193px;
+  top: 181px;
+}
+
+.terminal_honeycomb2 {
+  left: 193px;
+  top: 346px;
+}
+
+.terminal_honeycomb3 {
+  left: 51px;
+  top: 263px;
+}
+
+.terminal_honeycomb4 {
+  left: 51px;
+  top: 426px;
+}
+
+.terminal_honeycomb5 {
+  margin: 0 22px;
+  width: 43px;
+  height: 74px;
+  background-color: white;
+  position: absolute;
+  left: 0px;
+  top: 385px;
+}
+.terminal_honeycomb5:before {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-right: 22px solid white;
+  border-top: 37px solid transparent;
+  border-bottom: 37px solid transparent;
+  position: absolute;
+  left: -22px;
+}
+.terminal_honeycomb5:after {
+  content: "";
+  width: 0;
+  position: absolute;
+  right: -22px;
+  border-left: 22px solid white;
+  border-top: 37px solid transparent;
+  border-bottom: 37px solid transparent;
+}
+
+.terminal_honeycomb6 {
+  margin: 0 22px;
+  width: 43px;
+  height: 74px;
+  background-color: white;
+  position: absolute;
+  left: 147px;
+  top: 226px;
+}
+.terminal_honeycomb6:before {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-right: 22px solid white;
+  border-top: 37px solid transparent;
+  border-bottom: 37px solid transparent;
+  position: absolute;
+  left: -22px;
+}
+.terminal_honeycomb6:after {
+  content: "";
+  width: 0;
+  position: absolute;
+  right: -22px;
+  border-left: 22px solid white;
+  border-top: 37px solid transparent;
+  border-bottom: 37px solid transparent;
+}
+
+.terminal_honeycomb7 {
+  margin: 0 8px;
+  width: 16px;
+  height: 28px;
+  background-color: white;
+  position: absolute;
+  left: 137px;
+  top: 170px;
+}
+.terminal_honeycomb7:before {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-right: 8px solid white;
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  position: absolute;
+  left: -8px;
+}
+.terminal_honeycomb7:after {
+  content: "";
+  width: 0;
+  position: absolute;
+  right: -8px;
+  border-left: 8px solid white;
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+}
+
+.terminal_honeycomb8 {
+  margin: 0 41px;
+  width: 81px;
+  height: 140px;
+  background-color: white;
+  position: absolute;
+  left: 293px;
+  top: 40px;
+}
+.terminal_honeycomb8:before {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-right: 41px solid white;
+  border-top: 70px solid transparent;
+  border-bottom: 70px solid transparent;
+  position: absolute;
+  left: -41px;
+}
+.terminal_honeycomb8:after {
+  content: "";
+  width: 0;
+  position: absolute;
+  right: -41px;
+  border-left: 41px solid white;
+  border-top: 70px solid transparent;
+  border-bottom: 70px solid transparent;
+}
+
+.terminal_honeycomb9 {
+  margin: 0 19px;
+  width: 37px;
+  height: 64px;
+  background-color: white;
+  position: absolute;
+  left: 250px;
+  top: 0px;
+}
+.terminal_honeycomb9:before {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-right: 19px solid white;
+  border-top: 32px solid transparent;
+  border-bottom: 32px solid transparent;
+  position: absolute;
+  left: -19px;
+}
+.terminal_honeycomb9:after {
+  content: "";
+  width: 0;
+  position: absolute;
+  right: -19px;
+  border-left: 19px solid white;
+  border-top: 32px solid transparent;
+  border-bottom: 32px solid transparent;
+}
+
+.terminal_honeycomb10 {
+  margin: 0 79px;
+  width: 158px;
+  height: 273px;
+  background-color: white;
+  position: absolute;
+  left: 234px;
+  top: 204px;
+}
+.terminal_honeycomb10:before {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-right: 79px solid white;
+  border-top: 136.5px solid transparent;
+  border-bottom: 136.5px solid transparent;
+  position: absolute;
+  left: -79px;
+}
+.terminal_honeycomb10:after {
+  content: "";
+  width: 0;
+  position: absolute;
+  right: -79px;
+  border-left: 79px solid white;
+  border-top: 136.5px solid transparent;
+  border-bottom: 136.5px solid transparent;
+}
+
+.terminal_honeycomb11 {
+  margin: 0 64px;
+  width: 127px;
+  height: 220px;
+  background-color: white;
+  position: absolute;
+  left: 218px;
+  top: 438px;
+}
+.terminal_honeycomb11:before {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-right: 64px solid white;
+  border-top: 110px solid transparent;
+  border-bottom: 110px solid transparent;
+  position: absolute;
+  left: -64px;
+}
+.terminal_honeycomb11:after {
+  content: "";
+  width: 0;
+  position: absolute;
+  right: -64px;
+  border-left: 64px solid white;
+  border-top: 110px solid transparent;
+  border-bottom: 110px solid transparent;
+}

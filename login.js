@@ -1,48 +1,18 @@
-const main = document.getElementById('main-view');
+const loginButton = document.getElementById('log-in'),
+      passwordInput = document.getElementById('password-input'),
+      usernameInput = document.getElementById('username-input');
 
-const loginDescription = document.createElement('p');
-loginDescription.appendChild(document.createTextNode('This is the login page'));
-main.appendChild(loginDescription);
-
-const usernameLabel = document.createElement('label');
-usernameLabel.setAttribute('for', 'username-input');
-usernameLabel.appendChild(document.createTextNode('Username: '));
-main.appendChild(usernameLabel);
-
-const usernameInput = document.createElement('input');
-usernameInput.setAttribute('type', 'text');
-usernameInput.setAttribute('id', 'username-input');
-main.appendChild(usernameInput);
-
-main.appendChild(document.createElement('br'));
-
-const passwordLabel = document.createElement('label');
-passwordLabel.setAttribute('for', 'password-input');
-passwordLabel.appendChild(document.createTextNode('Password: '));
-main.appendChild(passwordLabel);
-
-const passwordInput = document.createElement('input');
-passwordInput.setAttribute('type', 'password');
-passwordInput.setAttribute('id', 'password-input');
-main.appendChild(passwordInput);
-
-main.appendChild(document.createElement('br'));
-
-const loginButton = document.createElement('button');
-loginButton.appendChild(document.createTextNode('Login'));
 loginButton.addEventListener('click', () =>
   fetch('https://boiling-reef-89836.herokuapp.com/lock_owners/api/authenticate/', {
     method: 'POST',
     body: JSON.stringify({ username: usernameInput.value, password: passwordInput.value }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
+    headers: { 'Content-Type': 'application/json' }
   })
     .then(response => response.json())
     .then(responseJson => {
       console.log(responseJson);
       if (responseJson.hasOwnProperty('token')) {
-        // Successful login. Get user id and store that in session storage also.
+        // Successful login, get user id and store that in session storage
         const token = responseJson.token;
         fetch("https://boiling-reef-89836.herokuapp.com/lock_owners/api/authenticate/get_user_id/?token=" + token)
           .then(response2 => response2.json())
@@ -56,8 +26,38 @@ loginButton.addEventListener('click', () =>
           })
       } else {
         // Unsuccessful login, display error message
+        console.log('Error logging in');
       }
     })
 );
 
-main.appendChild(loginButton);
+// Create the honeycomb elements
+const honeyContainer = document.getElementById('honeywarp');
+
+for (let i = 1; i < 12; i++) {
+  const honeycomb = document.createElement('div');
+  honeycomb.classList.add('honeycomb');
+  honeycomb.classList.add(`terminal_honeycomb${i}`);
+
+  switch(i) {
+    case 1:
+    case 4:
+    case 7:
+    case 11:
+      honeycomb.classList.add('type1');
+      break;
+    case 2:
+    case 5:
+    case 6:
+    case 8:
+      honeycomb.classList.add('type2');
+      break;
+    case 3:
+    case 9:
+    case 10:
+      honeycomb.classList.add('type3');
+      break;
+  }
+
+  honeyContainer.appendChild(honeycomb);
+}
