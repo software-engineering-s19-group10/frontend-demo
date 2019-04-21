@@ -13,8 +13,11 @@ fetch('https://boiling-reef-89836.herokuapp.com/lock_owners/api/locks/', {
 })
 .then(response => response.json())
 .then(responseJson => {
-    // URL = responseJson["ip_address"];
-    URL = "127.0.0.1:8080";
+    URL = responseJson["ip_address"];
+
+    // testing purposes
+    //URL = "127.0.0.1:8080";
+    
     // Create the socket
     console.log("Creating Socket.");
     const socket = new WebSocket('ws://' + URL);
