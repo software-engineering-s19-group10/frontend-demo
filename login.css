@@ -80,10 +80,10 @@ input {
 /* 3D Button By: https://codepen.io/kanishkkunal/pen/KwpGNa*/
 
 button {
-  outline: none; /* [Added] Remove outline on click */
-  font-size: 120%;
-  font-family: "customFont", "Ubuntu-R", serif;
-  font-weight: bold;
+  outline: none;                                /* [Added] Remove outline on click */
+  font-family: "customFont", "Ubuntu-R", serif; /* [Added] Change font */
+  font-size: 120%;                              /* [Added] Increase font size */
+  font-weight: bold;                            /* [Added] Change font weight*/
 
   position:relative;
   width: auto;
@@ -118,6 +118,7 @@ button:active{
 
 .honeywarp {
   z-index: -1; /* [Added] Push background behind everything else */
+
   width: 335px;
   height: 661px;
   position: absolute;
