@@ -18,6 +18,8 @@ else {
     'Video Feed': new videoView()
   };
 
+  const default_view_name = 'Home';
+
   const menu_nav = document.createElement('nav');
   menu_nav.setAttribute('id', 'side-menu');
 
@@ -36,9 +38,13 @@ else {
         // Block against swapping to current view
         if (current_main === main_element) return;
         
-        modules[main_element.dataset.view].update();
-        document.body.replaceChild(main_element, current_main);
-        modules[current_main.dataset.view].clear();
+        const current_view_name = current_main.dataset.view,
+              next_view_name = main_element.dataset.view;
+
+        modules[next_view_name].update();  // Update data in the new view
+        document.title = `Smart Lock | ${next_view_name}`;  // Update the title
+        document.body.replaceChild(main_element, current_main);  // Put in new view
+        modules[current_view_name].clear();  // Clear data from the old view
       }
     );
     
@@ -49,5 +55,6 @@ else {
 
   document.body.appendChild(menu_nav);
 
-  document.body.appendChild(modules['Home'].mainElement);
+  document.body.appendChild(modules[default_view_name].mainElement);
+  document.title = `Smart Lock | ${default_view_name}`
 }
