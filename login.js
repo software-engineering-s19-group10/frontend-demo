@@ -1,7 +1,7 @@
 const main = document.getElementById('main-view');
 
 const loginDescription = document.createElement('p');
-loginDescription.appendChild(document.createTextNode('This is the login page'));
+loginDescription.appendChild(document.createTextNode('Welcome!'));
 main.appendChild(loginDescription);
 
 const usernameLabel = document.createElement('label');
@@ -29,7 +29,7 @@ main.appendChild(passwordInput);
 main.appendChild(document.createElement('br'));
 
 const loginButton = document.createElement('button');
-loginButton.appendChild(document.createTextNode('Login'));
+loginButton.appendChild(document.createTextNode('LOGIN'));
 loginButton.addEventListener('click', () =>
   fetch('https://boiling-reef-89836.herokuapp.com/lock_owners/api/authenticate/', {
     method: 'POST',
