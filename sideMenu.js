@@ -60,45 +60,52 @@ window.onload = function() {
       JS animation functions.
       animateOpen(), animateClose(), moveWith()
       */
-      function animateOpen() { // Menu opening animation.
+      function animateOpen() // Menu opening animation.
+      {
         let pos = parseInt(sideMenu.style.left);
-        let id = setInterval(frame, 1);
+        let id = setInterval(frame, 10);
 
         function frame() { // Animate.
-          if (pos == 0) {
-            clearInterval(id);
-            cancelOpen = false, cancelClose = false;
-          } else {
-            if (cancelOpen) {
+          for (let i = 0; i < 10; i++) {
+            if (pos == 0) {
               clearInterval(id);
               cancelOpen = false, cancelClose = false;
+            } else {
+              if (cancelOpen) {
+                clearInterval(id);
+                cancelOpen = false, cancelClose = false;
+              }
+              pos++;
+              sideMenu.style.left = pos + "px";
             }
-            pos++;
-            sideMenu.style.left = pos + "px";
           }
         }
       }
 
-      function animateClose() { // Menu closing animation.
+      function animateClose() // Menu closing animation.
+      { 
         let pos = parseInt(sideMenu.style.left);
-        let id = setInterval(frame, 1);
+        let id = setInterval(frame, 10);
 
         function frame() { // Animate.
-          if (pos == -180) {
-            clearInterval(id);
-            cancelOpen = false, cancelClose = false;
-          } else {
-            if (cancelClose) {
+          for (let i = 0; i < 10; i++) {
+            if (pos == -180) {
               clearInterval(id);
               cancelOpen = false, cancelClose = false;
+            } else {
+              if (cancelClose) {
+                clearInterval(id);
+                cancelOpen = false, cancelClose = false;
+              }
+              pos--; 
+              sideMenu.style.left = pos + "px";
             }
-            pos--; 
-            sideMenu.style.left = pos + "px";
           }
         }
       }
 
-      function moveWith() { // Moves the side menu with the finger.
+      function moveWith() // Moves the side menu with the finger.
+      {
         if (parseInt(sideMenu.style.left) >= -180 && parseInt(sideMenu.style.left) <= 0)
           sideMenu.style.left = (current.clientX - sideMenu.offsetWidth) + 'px';
 
@@ -108,6 +115,7 @@ window.onload = function() {
         if (parseInt(sideMenu.style.left) > 0) // Prevents over shoot.
           sideMenu.style.left = '0px';
       }
+
     } else {
       sideMenu.style.left = '0px';
     }
