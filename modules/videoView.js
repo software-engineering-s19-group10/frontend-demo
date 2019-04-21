@@ -14,10 +14,8 @@ export default class videoView extends BaseView {
     };
 
     const imgDiv = document.createElement('div');
-    imgDiv.class = "text-center h-25 d-inline-block";
 
     const img = document.createElement("img");
-    img.class = "rounded mx-auto d-block img-responsive";
     img.id = "latestImage";
 
     imgDiv.appendChild(img);
@@ -28,15 +26,11 @@ export default class videoView extends BaseView {
 
     const playButton = document.createElement("button");
     playButton.type = "button";
-    playButton.class = "btn btn-danger btn-block";
     playButton.id = "play-btn";
+    playButton.textContent = "Pause";
 
-    const symbol = document.createElement("span");
-    symbol.class = "glyphicon glyphicon-pause";
-    symbol.id = "play-pause";
-
-    playButton.appendChild(symbol);
-
+    playButton.style.width = '50em'; // setting the width 
+    playButton.style.height = '5em'; // setting the height 
     this.mainElement.appendChild(playButton);
    
     wait("#play-btn");
