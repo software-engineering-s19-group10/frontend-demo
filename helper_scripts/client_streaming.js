@@ -32,9 +32,6 @@ fetch('https://boiling-reef-89836.herokuapp.com/lock_owners/api/locks/', {
         // Boolean to check if we should render the image or not. I.E. is it paused?
         var isPlaying = true;
 
-        // Get glyph span from play button from DOM
-        let play_glyph = document.getElementById("play-pause");
-
         // Get play button from DOM.
         let play_btn = document.getElementById("play-btn");
 
@@ -43,9 +40,9 @@ fetch('https://boiling-reef-89836.herokuapp.com/lock_owners/api/locks/', {
             console.log("Changing from isPlaying:" + isPlaying + "to " + !isPlaying + ".");
             // Change the icon
             if(isPlaying) {
-                play_glyph.className = "glyphicon glyphicon-play";
+                play_btn.value = "Pause";
             } else {
-                play_glyph.className = "glyphicon glyphicon-pause";
+                play_btn.value = "Play";
             }
 
             // Toggle between play and pause
@@ -75,9 +72,6 @@ fetch('https://boiling-reef-89836.herokuapp.com/lock_owners/api/locks/', {
                 // Display on screen.
                 imgelement.src = datajpg;
             }
-
-            isPlaying = false;
-
         }
     }
 

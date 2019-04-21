@@ -1,12 +1,9 @@
 import HomeView from './modules/home.js'
 import VisitorView from './modules/visitor.js'
 import StatisticsView from './modules/statistics.js'
-<<<<<<< HEAD
 import EventFeedView from './modules/eventFeed.js';
-=======
 import SRNView from './modules/srnView.js';
 import videoView from './modules/videoView.js';
->>>>>>> local
 
 if (sessionStorage.getItem('token') == null)
   window.location.replace('/login.html');  // Redirect to the login page
