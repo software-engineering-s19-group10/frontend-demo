@@ -8,27 +8,21 @@
     <title>Smart Lock Frontend Demo</title>
     <link href="login.css" rel="stylesheet">
   </head>
-
-  <!-- Honeycomb Background -->
-  <div class="honeywarp">
-    <div class="honeycomb type1 terminal_honeycomb1"></div>
-    <div class="honeycomb type2 terminal_honeycomb2"></div>
-    <div class="honeycomb type3 terminal_honeycomb3"></div>
-    <div class="honeycomb type1 terminal_honeycomb4"></div>
-    <div class="honeycomb type2 terminal_honeycomb5"></div>
-    <div class="honeycomb type2 terminal_honeycomb6"></div>
-    <div class="honeycomb type1 terminal_honeycomb7"></div>
-    <div class="honeycomb type2 terminal_honeycomb8"></div>
-    <div class="honeycomb type3 terminal_honeycomb9"></div>
-    <div class="honeycomb type3 terminal_honeycomb10"></div>
-    <div class="honeycomb type1 terminal_honeycomb11"></div>
-  </div>
-  <!-- By: https://codepen.io/careyhuffman/pen/Fvdjq -->
-
   <body>
-  <img src="img/SmartLock_Logo.png" draggable="false">
-  <div class="card" id="main-view"></div>
+    <img src="img/SmartLock_Logo.png" draggable="false">
+    <div class="card" id="main-view">
+      <p>Welcome!</p>
+      <label for="username-input">Username: </label>
+      <input type="text" id="username-input">
+      <br>
+      <label for="password-input">Password: </label>
+      <input type="password" id="password-input">
+      <br>
+      <button id="log-in">LOGIN</button>
+      <!-- Honeycomb Background -->
+      <div id="honeywarp" class="honeywarp"></div>
+      <!-- By: https://codepen.io/careyhuffman/pen/Fvdjq -->
+    </div>
   </body>
-
   <script src="login.js"></script>
 </html>

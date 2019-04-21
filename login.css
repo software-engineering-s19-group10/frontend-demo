@@ -5,10 +5,14 @@
 
 html {
   font-family: "customFont", "Ubuntu-R", serif;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 
-body{
+body {
   display: block;
   margin: auto;
   text-align: center;
@@ -17,18 +21,18 @@ body{
   margin: auto;
 }
 
-img{
+img {
   position: relative;
   width: 22%;
   padding: 3%;
 }
 
-p{
+p {
   font-weight: bold;
   font-size: 200%;
 }
 
-label{
+label {
   font-size: 120%;
 }
 
@@ -75,9 +79,6 @@ input {
 }
 
 
-
-
-
 /* 3D Button By: https://codepen.io/kanishkkunal/pen/KwpGNa*/
 
 button {
@@ -117,7 +118,7 @@ button:active{
 
 /* Honeycomb Background By: https://codepen.io/careyhuffman/pen/Fvdjq */
 
-.honeywarp {
+#honeywarp {
   z-index: -1; /* [Added] Push background behind everything else */
 
   width: 335px;
