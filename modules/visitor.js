@@ -5,7 +5,7 @@ const HOST = 'https://boiling-reef-89836.herokuapp.com/',
 
 export default class VisitorView extends BaseView {
   constructor() {
-    super('Visitor');
+    super('Visitors');
     
     this.visitorElements = [];
     
@@ -74,6 +74,18 @@ export default class VisitorView extends BaseView {
     this.mainElement.appendChild(visitor_table);
   }
 
+  clear() {
+    while (this.table_body.firstChild)
+      this.table_body.removeChild(this.table_body.firstChild);
+  }
+
+  update() {
+    this.clear();
+
+    for (let row of this.visitorElements)
+      this.table_body.appendChild(row);
+  }
+
   /* Add a visitor 'tr' element to the array */
   addVisitorElement(visitor_obj) {
     const visitor_row = document.createElement('tr');
@@ -103,7 +115,8 @@ export default class VisitorView extends BaseView {
     button_delete.addEventListener('click', () => {
       if (confirm(`Are you sure you want to delete ${visitor_obj['visitor']} (${visitor_obj['id']})?`)) {
         this.deleteVisitor(visitor_obj['id']);
-        this.deleteVisitorElement(visitor_row);
+        visitor_row.remove();  // Delete the row
+        this.update();
       }
     });
 
@@ -115,11 +128,33 @@ export default class VisitorView extends BaseView {
     this.visitorElements.push(visitor_row);
   }
 
-  /* Remove a visitor 'tr' element from the array */
-  deleteVisitorElement(element) {
-    this.visitorElements = this.visitorElements.filter(e => e !== element);
+  /* Get the list of visitors from the server */
+  getVisitors() {
+    fetch(`${HOST}${ENDPOINT}`)
+      .then(response => response.json())
+      .then(data => {
+        for (let visitor of data) 
+          this.addVisitorElement(visitor);
+    
+        this.update();  // This is a bit messy
+    });
+  }
 
-    this.updateVisitorTable();
+  /* Create a new visitor on the server */
+  postVisitor(lock_id, visitor_name) {
+    fetch(`${HOST}${ENDPOINT}`, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ visitor: visitor_name, lock: lock_id })
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.addVisitorElement(data);
+        this.update();
+      });
   }
 
   /* Remove an exisiting visitor from the server */
@@ -130,48 +165,7 @@ export default class VisitorView extends BaseView {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       }
-    }).then(() => this.updateVisitorTable());  // Doesn't return anything
-  }
-
-  /* Create a new visitor on the server */
-  postVisitor(lock_id, visitor_name) {
-    fetch(`${HOST}${ENDPOINT}`, {
-      method: 'post',
-      headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        visitor: visitor_name,
-        lock: lock_id
-      })
-    }).then(res => res.json())
-      .then(res => {
-        this.addVisitorElement(res);
-        this.updateVisitorTable();
-      });
-  }
-
-  /* Get the list of visitors from the server */
-  getVisitors() {
-    fetch(`${HOST}${ENDPOINT}`)
-      .then(res => res.json())
-      .then(res => {
-        for (let visitor of res) { 
-          console.log(visitor); 
-          this.addVisitorElement(visitor);
-        } 
-    
-        this.updateVisitorTable();  // This is a bit messy
-    });
-  }
-
-  /* Update elements inside the table */
-  updateVisitorTable() {
-    while (this.table_body.firstChild)
-      this.table_body.removeChild(this.table_body.firstChild);
-
-    for (let row of this.visitorElements)
-      this.table_body.appendChild(row);
+    })
+      .then(() => this.update());  // Doesn't return anything
   }
 }
