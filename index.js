@@ -7,7 +7,6 @@ import videoView from './modules/videoView.js';
 import ResidentsView from './modules/residents.js';
 
 
-
 if (sessionStorage.getItem('token') == null)
   window.location.replace('/login.html');  // Redirect to the login page
 else {

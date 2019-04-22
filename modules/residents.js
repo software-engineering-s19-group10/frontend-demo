@@ -15,8 +15,6 @@ export default class ResidentsView extends BaseView {
     this.residents = [];
     this.imageIndex = 0;
     this.imagePaths = new Array(IMAGE_COUNT);
-
-    this.getResidents();
   }
 
   initMainElement() {
@@ -92,8 +90,6 @@ export default class ResidentsView extends BaseView {
           break;
 
         const current_image = image_selector.children[this.imageIndex];
-
-        // const file_path = event.target.files[0];
   
         const reader = new FileReader();
   
@@ -149,6 +145,16 @@ export default class ResidentsView extends BaseView {
     add_container.appendChild(button_cancel);
 
     this.mainElement.appendChild(add_container);
+  }
+
+  update() {
+    this.getResidents();
+  }
+
+  clear() {
+    this.residentTable.clear();
+    this.showTableView();
+    this.clearAddView();
   }
 
   clearAddView() {
