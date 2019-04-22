@@ -1,0 +1,39 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 100%;
+}
+
+thead {
+  background-color: rgb(66, 74, 77);
+  color: white;
+}
+
+thead, tbody {
+  text-align: left;
+  padding: 8px;
+}
+
+tbody {
+  overflow-y: scroll; 
+  position: relative;
+  padding: 20px;
+  width: 80vw;
+}
+
+td {
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+tr:nth-child(even) {
+  background-color: #0000004f
+}
+
+@media only screen and (max-width: 768px) {
+  table {
+    width: 100vw;
+    max-width: calc(100vw - 400px);
+  }
+}
