@@ -201,7 +201,7 @@ export default class ResidentsView extends BaseView {
     delete_button.addEventListener(
       'click',
       () => {
-        if (confirm(`Are you sure you want to create resident "${resident_obj['full_name']}" (${resident_obj['id']})?`)) {
+        if (confirm(`Are you sure you want to delete resident "${resident_obj['full_name']}" (${resident_obj['id']})?`)) {
           this.deleteResident(resident_obj['id']);
           this.residentTable.remove(row);
         }
