@@ -1,9 +1,11 @@
-import HomeView from './modules/home.js'
-import VisitorView from './modules/visitor.js'
-import StatisticsView from './modules/statistics.js'
+import HomeView from './modules/home.js';
+import VisitorView from './modules/visitor.js';
+import StatisticsView from './modules/statistics.js';
 import EventFeedView from './modules/eventFeed.js';
 import SRNView from './modules/srnView.js';
 import videoView from './modules/videoView.js';
+import ResidentsView from './modules/residents.js';
+
 
 
 if (sessionStorage.getItem('token') == null)
@@ -11,6 +13,7 @@ if (sessionStorage.getItem('token') == null)
 else {
   const modules = {
     'Home': new HomeView(),
+    'Residents': new ResidentsView(),
     'Visitors': new VisitorView(),
     'Events': new EventFeedView(),
     'Statistics': new StatisticsView(),
