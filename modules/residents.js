@@ -12,18 +12,11 @@ const HOST = 'https://boiling-reef-89836.herokuapp.com/',
 export default class ResidentsView extends BaseView {
   constructor() {
     super('Residents');
+    this.residents = [];
     this.imageIndex = 0;
     this.imagePaths = new Array(IMAGE_COUNT);
+
     this.getResidents();
-  }
-
-  /* Check if all IMAGE_COUNT images are picked */
-  checkImagesPicked() {
-    for (let path of this.imagePaths)
-      if (path === undefined)
-        return false;
-
-    return true;
   }
 
   initMainElement() {
@@ -36,44 +29,44 @@ export default class ResidentsView extends BaseView {
           table_container = document.createElement('div'),
           button_add = document.createElement('button');
 
-    this.residents = new Table('Name', 'ID', 'Lock ID', 'Options');
+    this.tableView = table_container; // Used for clearing values
 
-    table_container.appendChild(this.residents.table);
+    this.residentTable = new Table('Name', 'ID', 'Lock ID', 'Options');
+
+    table_container.appendChild(this.residentTable.table);
 
     button_add.appendChild(document.createTextNode('Add Resident'));
-
-    button_add.addEventListener(
-      'click',
-      () => {
-        // table_container.style.display = 'block';  
-        table_container.style.setProperty('display', 'none');  // Hide the table view
-        // add_container.style.display = 'none';  
-        add_container.style.setProperty('display', 'block');  // Show the add view
-      }
-    );
+    button_add.addEventListener('click', () => this.showAddView());
 
     table_container.appendChild(button_add);
 
     this.mainElement.appendChild(table_container);
 
+    this.addView = add_container; // Used for clearing values
+
     add_container.style.setProperty('display', 'none');
 
     const input_upload = document.createElement('input');
     input_upload.setAttribute('type', 'file');
+    input_upload.setAttribute('multiple', '');
+    this.fileInput = input_upload;  // Used for clearing values
 
     const image_preview = document.createElement('img');
     image_preview.setAttribute('alt', 'Image preview here');
     image_preview.setAttribute('height', '200px');
     image_preview.setAttribute('src', STOCK_IMAGE);
+    this.imagePreview = image_preview;  // Used for clearing values
 
     const image_selector = document.createElement('div');
+    this.imagePreviews = image_selector;  // Used for clearing values
 
     const input_name = document.createElement('input');
     input_name.setAttribute('type', 'text');
+    this.nameInput = input_name;  // Used for clearing values
 
     const submit_button = document.createElement('button');
     submit_button.appendChild(document.createTextNode('Submit'));
-    // submit_button.disabled = true;
+    submit_button.disabled = true;
 
     const button_cancel = document.createElement('button');
     button_cancel.appendChild(document.createTextNode('Cancel'));
@@ -94,26 +87,34 @@ export default class ResidentsView extends BaseView {
     }
 
     input_upload.onchange = (event) => {
-      const current_image = image_selector.children[this.imageIndex];
+      for (let file_path of event.target.files) {
+        if (this.imageIndex == IMAGE_COUNT)
+          break;
 
-      const file_path = event.target.files[0];
+        const current_image = image_selector.children[this.imageIndex];
 
-      const reader = new FileReader();
+        // const file_path = event.target.files[0];
+  
+        const reader = new FileReader();
+  
+        // When we load a file use the file reader...
+        reader.addEventListener(
+          'load',
+          () => {
+            image_preview.setAttribute('src', reader.result);
+            current_image.setAttribute('src', reader.result);
+          }
+        );
+  
+        reader.readAsDataURL(file_path);
+        
+        this.imagePaths[this.imageIndex] = file_path;
+  
+        // Enable the button if IMAGE_COUNT images have been chosen
+        submit_button.disabled = !this.checkImagesPicked();
 
-      // When we load a file use the file reader...
-      reader.addEventListener('load', () => {
-        image_preview.setAttribute('src', reader.result);
-        current_image.setAttribute('src', reader.result);
-      });
-
-      reader.readAsDataURL(file_path);
-
-      this.imagePaths[this.imageIndex] = file_path;
-
-      // Enable the button if IMAGE_COUNT images have been chosen
-      // submit_button.disabled = !this.checkImagesPicked();
-
-      console.log(this.imagePaths, submit_button.disabled);
+        this.imageIndex++;
+      }
     };
 
     submit_button.addEventListener(
@@ -123,10 +124,6 @@ export default class ResidentsView extends BaseView {
 
         if (confirm(`Are you sure you want to create resident "${resident_name}"?`)) {
           this.postResident(1, resident_name);  // Note: Hardcoded lock ID here
-          // add_container.style.display = 'none';  // Hide the add view
-          add_container.style.setProperty('display', 'none');
-          // table_container.style.display = 'block';  //Present the table view
-          table_container.style.setProperty('display', 'block');
         }
       }
     );
@@ -134,8 +131,8 @@ export default class ResidentsView extends BaseView {
     button_cancel.addEventListener(
       'click',
       () => {
-        add_container.style.setProperty('display', 'none');
-        table_container.style.setProperty('display', 'block');
+        this.showTableView();
+        this.clearAddView();
       }
     )
 
@@ -154,25 +151,59 @@ export default class ResidentsView extends BaseView {
     this.mainElement.appendChild(add_container);
   }
 
+  clearAddView() {
+    this.imagePaths = new Array(9);
+
+    for (let i = 0; i < IMAGE_COUNT; i++)
+      this.imagePreviews.children[i].setAttribute('src', STOCK_IMAGE);
+
+    this.imagePreview.setAttribute('src', this.imagePreviews.children[0].getAttribute('src'));
+
+    this.fileInput.value = null;
+
+    this.nameInput.value = '';
+  }
+
+  /* Check if all IMAGE_COUNT images are picked */
+  checkImagesPicked() {
+    for (let path of this.imagePaths)
+      if (path === undefined)
+        return false;
+
+    return true;
+  }
+
+  /* Present user with view of add resident dialog */
+  showAddView() {
+    this.addView.style.setProperty('display', 'block');
+    this.tableView.style.setProperty('display', 'none');
+  }
+
+  /* Present user with view of residents table */
+  showTableView() {
+    this.addView.style.setProperty('display', 'none');
+    this.tableView.style.setProperty('display', 'block');
+  }
+
   addResidentElement(resident_obj) {
     const delete_button = document.createElement('button');
     delete_button.appendChild(document.createTextNode('Delete'));
 
-    this.residents.add(
+    this.residentTable.add(
       resident_obj['full_name'],
       resident_obj['id'],
       resident_obj['lock'],
       delete_button
     );
 
-    const row = this.residents.body.lastChild;
+    const row = this.residentTable.body.lastChild;
 
     delete_button.addEventListener(
       'click',
       () => {
         if (confirm(`Are you sure you want to create resident "${resident_obj['full_name']}" (${resident_obj['id']})?`)) {
           this.deleteResident(resident_obj['id']);
-          this.residents.remove(row);
+          this.residentTable.remove(row);
         }
       }
     );
@@ -181,7 +212,12 @@ export default class ResidentsView extends BaseView {
   getResidents() {
     fetch(`${HOST}${ENDPOINT}`)
       .then(response => response.json())
-      .then(data => { for (let resident of data) this.addResidentElement(resident); })
+      .then(data => { 
+        for (let resident of data) {
+          this.residents.push(resident);
+          this.addResidentElement(resident);
+        }
+      })
   }
 
   postResident(lock_id, name) {
@@ -193,7 +229,38 @@ export default class ResidentsView extends BaseView {
       }
     )
       .then(response => response.json())
-      .then(data => this.addResidentElement(data));
+      .then(data => {
+        this.addResidentElement(data);
+
+        for (let image_path of this.imagePaths) {
+          if (image_path) {
+            const reader = new FileReader();
+
+            reader.addEventListener(
+              'load',
+              // btoa converts to base-64
+              () => this.postResidentImage(data['id'], btoa(reader.result))
+            );
+
+            reader.readAsBinaryString(image_path);
+          }
+        }
+
+        this.showTableView();
+        this.clearAddView();
+      });
+  }
+
+  postResidentImage(resident_id, image_bytes) {
+    fetch(`${HOST}lock_owners/api/resident-images/`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 'resident': resident_id, 'image_bytes': image_bytes })
+      }  
+    )
+      .then(response => response.json())
+      .then(data => console.log(data));
   }
 
   deleteResident(lock_id) {
