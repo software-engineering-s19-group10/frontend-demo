@@ -1,24 +1,23 @@
 export default class View {
   
   constructor(name) {
+    this.name = name;
+
     // Set up menu item
     this.menuElement = this.createMenuElement(name);
-    this.menuElement.addEventListener(
-      'click', 
-      _ => {
-        const main = document.getElementById('main-view');
-
-        // Block against swapping to current view
-        if (main !== this.mainElement)
-          document.body.replaceChild(this.mainElement, main);
-      }
-    );
 
     // Set up main view element
     this.mainElement = document.createElement('main');
     this.mainElement.setAttribute('id', 'main-view');
     this.initMainElement();
+    this.mainElement.setAttribute('data-view', name);
   }
+
+  /* Fill out view with fresh information */
+  update() { console.log(`View ${this.name} has not implimented update()`); }
+
+  /* Return main to it's starting state */
+  clear() { console.log(`View ${this.name} has not implimented clear()`); }
 
   createMenuElement(name) {
     const menu_item = document.createElement('li');

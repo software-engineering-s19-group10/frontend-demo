@@ -43,7 +43,7 @@ export default class Table {
 
   /* Clear children from the table body */
   clear() {
-    while (!this.body.firstChild)
+    while (this.body.firstChild)
       this.body.removeChild(this.body.firstChild);
   }
 }

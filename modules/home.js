@@ -11,4 +11,8 @@ export default class HomeView extends BaseView {
 
     this.mainElement.appendChild(message);
   }
+  
+  update() {}
+
+  clear() {}
 }
