@@ -1,7 +1,7 @@
 import BaseView from './baseView.js';
 
 const HOST = 'https://boiling-reef-89836.herokuapp.com/',
-      ENDPOINT = 'lock_owners/api/events/';
+  ENDPOINT = 'lock_owners/api/events/';
 
 export default class EventFeedView extends BaseView {
   constructor() {
@@ -9,19 +9,21 @@ export default class EventFeedView extends BaseView {
 
     this.events = null;
 
-    this.getEvents();
+    this.getEvents = this.getEvents.bind(this);
+    //this.update = this.update.bind(this);
+    //this.getEvents();
   }
 
   initMainElement() {
     const message = document.createElement('p');
     message.appendChild(document.createTextNode('This is the event feed'));
-    
+
     this.mainElement.appendChild(message);
 
     const event_table = document.createElement('table'),
-          event_table_body = this.table_body = document.createElement('tbody'),
-          event_table_head = document.createElement('thead'),
-          event_table_head_row = document.createElement('tr');
+      event_table_body = this.table_body = document.createElement('tbody'),
+      event_table_head = document.createElement('thead'),
+      event_table_head_row = document.createElement('tr');
 
     for (let column_name of ['Lock ID', 'Type', 'Time', 'Duration', 'Options']) {
       const column_header = document.createElement('td');
@@ -35,6 +37,11 @@ export default class EventFeedView extends BaseView {
     event_table.appendChild(event_table_body);
 
     this.mainElement.appendChild(event_table);
+
+    let me = this;
+    setInterval(() => {
+      me.update()
+    }, 3000);
   }
 
   getEvents() {
@@ -53,7 +60,15 @@ export default class EventFeedView extends BaseView {
     fetch(`${HOST}${ENDPOINT}${event_id}/`, { method: 'DELETE' });
   }
 
+  removeTable() {
+    const table_body = this.table_body;
+    while (table_body.firstChild) {
+      table_body.removeChild(table_body.firstChild);
+    }
+  }
+
   updateTable() {
+    this.removeTable();
     for (let event of this.events) {
       const event_row = document.createElement('tr');
 
@@ -78,5 +93,9 @@ export default class EventFeedView extends BaseView {
 
       this.table_body.appendChild(event_row);
     }
+  }
+
+  update() {
+    this.getEvents();
   }
 }
