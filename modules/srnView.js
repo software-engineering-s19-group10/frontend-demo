@@ -14,7 +14,7 @@ export default class SRNView extends BaseView {
     // Create the div 
     const map = document.createElement('div');
     map.id = "map";
-    map.style= "width: 500px; height: 500px;";
+    // map.style= "width: 500px; height: 500px;";
     this.mainElement.appendChild(map);
 
     async function wait() {
