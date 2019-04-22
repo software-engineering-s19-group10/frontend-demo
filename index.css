@@ -19,6 +19,8 @@ body {
   grid-template-columns: 200px 1fr;
 
   margin: 0;
+
+  background: #aab2b5;
 }
 
 nav {
@@ -35,7 +37,8 @@ nav ul {
   list-style-type: none;
 
   margin: 5%;
-  padding: 0; 
+  margin-right: 20px;
+  padding: 0;
 }
 
 nav ul li {
@@ -55,21 +58,30 @@ nav ul li:hover {
 }
 
 main {
-  margin: auto;
-  margin-top: 10px;
+  width: 100%;
+  max-width: 1000px;
+  min-width: 700px;
+
+  margin: 20px auto;
+  padding-left: 20px;
 }
 
 /* == Mobile == */
 @media only screen and (max-width: 768px) {
   nav {
     z-index: 1;
+    box-shadow: none;
   }
   
   main {
-    display: inline;
-    position: absolute;
-    margin: 20px;
-    left: 20px;
+    position: relative;
+    left: -170px;
+    width: 100%;
+  }
+
+  table {
+    width: 100vw;
+    max-width: calc(100vw - 400px);
   }
 }
 
@@ -78,6 +90,7 @@ main {
 table {
   border-collapse: collapse;
   width: 100%;
+  max-width: 100%;
 }
 
 thead {
@@ -90,17 +103,26 @@ thead, tbody {
   padding: 8px;
 }
 
-td{
+tbody {
+  overflow-y:scroll; 
+  position:relative;
+  padding: 20px;
+  width: 80vw;
+  height: 80vh;
+}
+
+td {
   padding: 10px;
   padding-left: 20px;
   padding-right: 20px;
 }
 
-tr:nth-child(even){background-color: #f2f2f2}
-
+tr:nth-child(even) {
+  background-color: #0000004f
+}
 
 /* SRN */
-#map{
-  width: 80vw;
+#map {
   height: 90vh;
 }
+

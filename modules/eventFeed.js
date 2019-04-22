@@ -16,7 +16,7 @@ export default class EventFeedView extends BaseView {
 
   initMainElement() {
     const message = document.createElement('p');
-    message.appendChild(document.createTextNode('This is the event feed'));
+    message.appendChild(document.createTextNode('Live Event Feed'));
 
     this.mainElement.appendChild(message);
 

@@ -7,7 +7,7 @@ export default class StatisticsView extends BaseView {
 
   initMainElement() {
     const message = document.createElement('p');
-    message.appendChild(document.createTextNode('Welcome to Statistics View!'));
+    message.appendChild(document.createTextNode('Statistics View'));
 
     this.mainElement.appendChild(message);
   }
