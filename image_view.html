@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Image</title>
+  </head>
+  <body>
+    <iframe id="pic"></iframe>
+    <script>
+      const HOST = 'https://boiling-reef-89836.herokuapp.com/',
+            ENDPOINT = 'lock_owners/api/image';
+
+      const pic = document.getElementById('pic');
+
+      const params = new URLSearchParams(window.location.search);
+
+      const lock_id = params.get("lock"),
+            filename = params.get("filename");
+
+      pic.src = `${HOST}${ENDPOINT}/?lock=${visitor_id}&filename=${filename}`;
+        
+    </script>
+  </body>
+</html>
