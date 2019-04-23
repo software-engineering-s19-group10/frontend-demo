@@ -93,7 +93,7 @@ export default class videoView extends BaseView {
 
         // Create the socket
         console.log("Creating Socket.");
-        this.socket = new WebSocket('wss://' + URL + ":" + PORT);
+        this.socket = new WebSocket('ws://' + URL + ":" + PORT);
         console.log("Socket Created.");
 
 
