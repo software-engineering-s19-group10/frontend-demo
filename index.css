@@ -1,32 +1,53 @@
 /* == Desktop == */
+@font-face {
+  font-family: "customFont";
+  src: url("customFont/Ubuntu-R.ttf"); /* https://design.ubuntu.com/font/ */
+}
+
+html {
+  font-family: "customFont", "Ubuntu-R", serif;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 body {
   display: grid;
 
   grid-template-columns: 200px 1fr;
 
   margin: 0;
+
+  background: #aab2b5;
 }
 
 nav {
   position: relative;
   height: 100vh;
 
-  background-color:rgb(33, 33, 33);
+  background: rgb(66, 74, 77);
   color: rgb(222, 222, 222);
+
+  box-shadow: 10px 0 10px rgba(0,0,0,0.25);
 }
 
 nav ul {
   list-style-type: none;
 
-  margin: 0;
-  padding-left: 0; 
+  margin: 5%;
+  margin-right: 20px;
+  padding: 0;
 }
 
 nav ul li {
   padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 
-  font-family: 'sans';
-  font-size: 2em;
+  font-family: "customFont", "Ubuntu-R", serif;
+  font-size: 25px;
 
   cursor: pointer;
   user-select: none;
@@ -37,45 +58,73 @@ nav ul li:hover {
 }
 
 main {
-  margin: 10px;
+  width: 100%;
+  max-width: 1000px;
+  min-width: 700px;
+
+  margin: 20px auto;
+  padding-left: 20px;
 }
 
 /* == Mobile == */
 @media only screen and (max-width: 768px) {
   nav {
-    position: relative;
-    height: 100vh;
-  
     z-index: 1;
-    background-color:rgb(33, 33, 33);
-    color: rgb(222, 222, 222);
-  }
-  
-  nav ul {
-    list-style-type: none;
-  
-    margin: 0;
-    padding-left: 0; 
-  }
-  
-  nav ul li {
-    padding: 5px;
-  
-    font-family: 'sans';
-    font-size: 2em;
-  
-    cursor: pointer;
-    user-select: none;
-  }
-  
-  nav ul li:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: none;
   }
   
   main {
-    display: inline;
-    position: absolute;
-    margin: 10px;
-    left: 20px;
+    position: relative;
+    left: -190px;
+    width: calc(100vw - 40px);
+    max-width: none;
+    min-width: auto;
   }
+}
+
+/* SRN */
+#map {
+  height: 90vh;
+}
+
+/* Temporary Visitors */
+#visitor-input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* Buttons https://codepen.io/daneden/pen/rcFJE */ 
+button, #visitor-add, #visitor-clear {
+  margin: 5px;
+  margin-left: 0;
+}
+
+button, #visitor-add, #visitor-clear {
+  margin: 5px;
+  margin-left: 0;
+	font-size: .825em;
+	text-decoration: none;
+	font-weight: 700;
+	padding: .35em 1em;
+	background-color: #eaeef1;
+	background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.1));
+	border-radius: 3px;
+	color: rgba(0,0,0,.6);
+	text-shadow: 0 1px 1px rgba(255,255,255,.7);
+	box-shadow: 0 0 0 1px rgba(0,0,0,.2), 0 1px 2px rgba(0,0,0,.2), inset 0 1px 2px rgba(255,255,255,.7);
+}
+
+button:hover, button.hover {
+	background-color: #fff;
+}
+
+button:active, button.active {
+	background-color: #d0d3d6;
+	background-image: linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,0));
+	box-shadow: inset 0 0 2px rgba(0,0,0,.2), inset 0 2px 5px rgba(0,0,0,.2), 0 1px rgba(255,255,255,.2);
+}
+
+/* Input */
+#visitor-name {
+  width: 300px;
 }

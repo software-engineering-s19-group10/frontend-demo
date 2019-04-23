@@ -20,7 +20,7 @@ export default class ResidentsView extends BaseView {
 
   initMainElement() {
     const message = document.createElement('p');
-    message.appendChild(document.createTextNode('Welcome to Residents View!'));
+    message.appendChild(document.createTextNode('Authorized Residents'));
 
     this.mainElement.appendChild(message);
 

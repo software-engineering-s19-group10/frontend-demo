@@ -2,22 +2,21 @@
 .container {
     position: relative;
     text-align: center;
-    color: white;
+    
+    margin: auto;
+    height: 80vh;
+
+    border: 3px black double;
 }
 
 /* Bottom left text */
-.bottom-left {
-    position: absolute;
-    bottom: 8px;
-    left: 320px;
+.bottom-left, .bottom-right {
+    position: relative;
+    margin: auto;
+    margin-top: 10px;
 }
-
-
-/* Bottom right text */
-.bottom-right {
-    position: absolute;
-    bottom: 8px;
-    right: 16px;
+@media only screen and (max-width: 768px) {
+    .container {
+        width: calc(100vw - 50px);
+    }
 }
-  
-  

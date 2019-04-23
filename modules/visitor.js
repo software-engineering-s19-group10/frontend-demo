@@ -13,7 +13,7 @@ export default class VisitorView extends BaseView {
 
   initMainElement() {
     const message = document.createElement('p');
-    message.appendChild(document.createTextNode('Welcome to Visitor View!'));
+    message.appendChild(document.createTextNode('Temporary Visitor Authentication'));
 
     this.mainElement.appendChild(message);
 

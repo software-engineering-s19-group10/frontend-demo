@@ -28,7 +28,8 @@ export default class StatisticsView extends BaseView {
   // Sets up base HTML code.
   initMainElement() {
     const message = document.createElement('p');
-    message.appendChild(document.createTextNode('Welcome to Statistics View!'));
+    message.appendChild(document.createTextNode('Statistics'));
+
     this.mainElement.appendChild(message);
 
     // This is code to create a <p></p> HTML thing, with an ID and text too.
