@@ -3,7 +3,8 @@ import Table from '../util/table.js'
 import BaseView from './baseView.js'
 
 
-const HOST = 'https://boiling-reef-89836.herokuapp.com/',
+const LOCK_ID = 11,
+      HOST = 'https://boiling-reef-89836.herokuapp.com/',
       ENDPOINT = 'lock_owners/api/residents/',
       IMAGE_COUNT = 9,  // Number of images to ask for
       STOCK_IMAGE = 'img/icons8-xlarge-icons-100.png';  // Path of the stock image
@@ -119,7 +120,7 @@ export default class ResidentsView extends BaseView {
         const resident_name = input_name.value;
 
         if (confirm(`Are you sure you want to create resident "${resident_name}"?`)) {
-          this.postResident(1, resident_name);  // Note: Hardcoded lock ID here
+          this.postResident(LOCK_ID, resident_name);  // Note: Hardcoded lock ID here
         }
       }
     );
