@@ -2,14 +2,21 @@
 .container {
     position: relative;
     text-align: center;
-    color: white;
+    
+    margin: auto;
+    height: 80vh;
+
+    border: 3px black double;
 }
 
 /* Bottom left text */
 .bottom-left, .bottom-right {
     position: relative;
     margin: auto;
-    margin-top: 80vh;
+    margin-top: 10px;
 }
-  
-  
+@media only screen and (max-width: 768px) {
+    .container {
+        width: calc(100vw - 50px);
+    }
+}
