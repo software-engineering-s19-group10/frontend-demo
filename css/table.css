@@ -9,22 +9,17 @@ thead {
   color: white;
 }
 
-thead, tbody {
+thead, tbody, tr {
   text-align: left;
   padding: 8px;
-}
 
-tbody {
-  overflow-y: scroll; 
-  position: relative;
-  padding: 20px;
-  width: 80vw;
+  width: 100%;
 }
 
 td {
-  padding: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 tr:nth-child(even) {
@@ -34,6 +29,6 @@ tr:nth-child(even) {
 @media only screen and (max-width: 768px) {
   table {
     width: 100vw;
-    max-width: calc(100vw - 400px);
+    max-width: calc(100vw - 50px);
   }
 }

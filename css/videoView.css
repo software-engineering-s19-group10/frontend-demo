@@ -6,18 +6,10 @@
 }
 
 /* Bottom left text */
-.bottom-left {
-    position: absolute;
-    bottom: 8px;
-    left: 320px;
-}
-
-
-/* Bottom right text */
-.bottom-right {
-    position: absolute;
-    bottom: 8px;
-    right: 16px;
+.bottom-left, .bottom-right {
+    position: relative;
+    margin: auto;
+    margin-top: 80vh;
 }
   
   
