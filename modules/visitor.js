@@ -1,15 +1,14 @@
-import BaseView from './baseView.js'
+import Table from '../util/table.js';
 
-const HOST = 'https://boiling-reef-89836.herokuapp.com/',
+import BaseView from './baseView.js';
+
+const LOCK_ID = 11,
+      HOST = 'https://boiling-reef-89836.herokuapp.com/',
       ENDPOINT = 'lock_owners/api/temp_auth/';
 
 export default class VisitorView extends BaseView {
   constructor() {
     super('Visitors');
-    
-    this.visitorElements = [];
-    
-    this.getVisitors();
   }
 
   initMainElement() {
@@ -38,7 +37,11 @@ export default class VisitorView extends BaseView {
     visitor_add.addEventListener('click', () => {
       const visitor_name_string = visitor_name.value;
 
-      this.postVisitor(1, visitor_name_string);
+      // Don't accept requests if no name is entered
+      if (visitor_name_string == '') return;
+
+      if (confirm(`Are you sure you want to add visitor "${visitor_name_string}"?`))
+        this.postVisitor(LOCK_ID, visitor_name_string);
     });
 
     button_div.appendChild(visitor_add);
@@ -47,85 +50,70 @@ export default class VisitorView extends BaseView {
     visitor_clear.setAttribute('type', 'button');
     visitor_clear.setAttribute('value', 'Clear');
 
+    visitor_clear.addEventListener(
+      'click',
+      () => visitor_name.value = ''
+    );
+
     button_div.appendChild(visitor_clear);
 
     visitor_input.appendChild(button_div);
 
     this.mainElement.appendChild(visitor_input);
 
-    const visitor_table = document.createElement('table'),
-          visitor_table_body = this.table_body = document.createElement('tbody'),
-          visitor_table_head = document.createElement('thead'),
-          visitor_table_head_row = document.createElement('tr');
+    this.visitorTable = new Table('Name', 'ID', 'Lock ID', 'Options');
 
-    for (let field_name of ['Name', 'ID', 'Options']) {
-      let table_data = document.createElement('td');
-      table_data.appendChild(document.createTextNode(field_name));
-
-      visitor_table_head_row.appendChild(table_data);
-    }
-
-    visitor_table_head.appendChild(visitor_table_head_row);
-
-    visitor_table.appendChild(visitor_table_head);
-
-    visitor_table.appendChild(visitor_table_body);
-
-    this.mainElement.appendChild(visitor_table);
+    this.mainElement.appendChild(this.visitorTable.table);
   }
 
   clear() {
-    while (this.table_body.firstChild)
-      this.table_body.removeChild(this.table_body.firstChild);
+    this.visitorTable.clear();
   }
 
   update() {
-    this.clear();
-
-    for (let row of this.visitorElements)
-      this.table_body.appendChild(row);
+    this.getVisitors();
   }
 
   /* Add a visitor 'tr' element to the array */
   addVisitorElement(visitor_obj) {
-    const visitor_row = document.createElement('tr');
-
-    for (let key of ['visitor', 'id']) {
-      const visitor_data = document.createElement('td');
-      visitor_data.appendChild(document.createTextNode(visitor_obj[key]));
-
-      visitor_row.appendChild(visitor_data);
-    }
-
     const button_container = document.createElement('td'),
           button_copy = document.createElement('button'),
           button_delete = document.createElement('button');
 
     button_copy.appendChild(document.createTextNode('Copy'));
 
-    button_copy.addEventListener('click', () => {
-      navigator.clipboard.writeText(`${window.location.host}/visitor.html?door=${visitor_obj['lock']}&visitor=${visitor_obj.id}`)
-      .then(
-        () => { window.alert('Visitor URL copied to clipboard'); },
-        () => { window.alert('Failed copying URL to clipboard'); });
-    });
+    button_copy.addEventListener(
+      'click',
+      () => {
+        navigator.clipboard.writeText(`${window.location.host}/visitor.html?door=${visitor_obj['lock']}&visitor=${visitor_obj.id}`)
+          .then(
+            () => { window.alert('Visitor URL copied to clipboard'); },
+            () => { window.alert('Failed copying URL to clipboard'); });
+      }
+    );
+
+    button_container.appendChild(button_copy);
 
     button_delete.appendChild(document.createTextNode('Delete'));
 
-    button_delete.addEventListener('click', () => {
-      if (confirm(`Are you sure you want to delete ${visitor_obj['visitor']} (${visitor_obj['id']})?`)) {
-        this.deleteVisitor(visitor_obj['id']);
-        visitor_row.remove();  // Delete the row
-        this.update();
+    const row = this.visitorTable.add(
+      visitor_obj['visitor'],
+      visitor_obj['id'],
+      visitor_obj['lock'],
+      button_container
+    );
+
+    button_delete.addEventListener(
+      'click',
+      () => {
+        if (confirm(`Are you sure you want to delete ${visitor_obj['visitor']} (${visitor_obj['id']})?`)) {
+          this.deleteVisitor(visitor_obj['id']);
+          this.visitorTable.remove(row);
+        }
       }
-    });
+    );
 
-    button_container.appendChild(button_copy);
     button_container.appendChild(button_delete);
-
-    visitor_row.appendChild(button_container);
-
-    this.visitorElements.push(visitor_row);
   }
 
   /* Get the list of visitors from the server */
@@ -133,10 +121,9 @@ export default class VisitorView extends BaseView {
     fetch(`${HOST}${ENDPOINT}`)
       .then(response => response.json())
       .then(data => {
+        console.log(data);
         for (let visitor of data) 
           this.addVisitorElement(visitor);
-    
-        this.update();  // This is a bit messy
     });
   }
 
@@ -152,8 +139,8 @@ export default class VisitorView extends BaseView {
     })
       .then(response => response.json())
       .then(data => {
+        console.log(data);
         this.addVisitorElement(data);
-        this.update();
       });
   }
 
@@ -166,6 +153,6 @@ export default class VisitorView extends BaseView {
         'Content-Type': 'application/json'
       }
     })
-      .then(() => this.update());  // Doesn't return anything
+      .then(response => console.log(response));  // Doesn't return anything
   }
 }

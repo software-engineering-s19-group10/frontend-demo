@@ -34,6 +34,8 @@ export default class Table {
     }
 
     this.body.appendChild(row);
+
+    return row;
   }
 
   /* Remove a row from the table body */
