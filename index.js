@@ -55,6 +55,12 @@ else {
 
   menu_nav.appendChild(menu_list);
 
+  const menu_logo = document.createElement('img');
+  menu_logo.setAttribute('id', 'menu-logo');
+  menu_logo.setAttribute('src', 'img/SmartLock_Logo.png');
+
+  menu_nav.appendChild(menu_logo);
+
   document.body.appendChild(menu_nav);
 
   document.body.appendChild(modules[default_view_name].mainElement);

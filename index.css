@@ -24,6 +24,11 @@ body {
 }
 
 nav {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: space-between;
+
   position: relative;
   height: 100vh;
 
@@ -31,6 +36,11 @@ nav {
   color: rgb(222, 222, 222);
 
   box-shadow: 10px 0 10px rgba(0,0,0,0.25);
+}
+
+nav img {
+  width: 60%;
+  margin: 0 auto 10px;
 }
 
 nav ul {
