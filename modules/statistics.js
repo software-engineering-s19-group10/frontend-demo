@@ -62,35 +62,32 @@ export default class StatisticsView extends BaseView {
     );
     this.mainElement.appendChild(yearButton);
 
-
-    const viewAllButton = document.createElement("button");
-    viewAllButton.appendChild(document.createTextNode("View All"));
-    viewAllButton.addEventListener("click", this.viewAllFunction);
-
+    const chartContainer = document.createElement('div');
+    chartContainer.setAttribute('id', 'chart-container');
 
     const doughnutChartDiv = document.createElement("div");
-    doughnutChartDiv.setAttribute("id", "doughnut-chart-container");
     const doughnutChartCanvas = document.createElement("canvas");
     doughnutChartCanvas.setAttribute("id", "my-doughnut-chart");
     doughnutChartDiv.appendChild(doughnutChartCanvas);
+
     this.doughnutChartCanvas = doughnutChartCanvas;
-    
-    this.mainElement.appendChild(doughnutChartDiv);
 
     const barChartDiv = document.createElement("div");
-    barChartDiv.setAttribute("id", "bar-chart-container");
     const barChartCanvas = document.createElement("canvas");
     barChartCanvas.setAttribute("id", "my-bar-chart");
     barChartDiv.appendChild(barChartCanvas);
 
     this.barChartCanvas = barChartCanvas;
 
-    this.mainElement.appendChild(barChartDiv);
+    chartContainer.appendChild(doughnutChartDiv);
+    chartContainer.appendChild(barChartDiv);
+
+    this.mainElement.appendChild(chartContainer);
   }
 
   getEvents() {
     const userId = sessionStorage.getItem('userId');
-    fetch('https://boiling-reef-89836.herokuapp.com/lock_owners/api/events/user/?owner=' + userId)
+    fetch(`https://boiling-reef-89836.herokuapp.com/lock_owners/api/events/user/?owner=${userId}`)
       .then(response => response.json())
       .then(response => {
         console.log(response.data);
@@ -104,7 +101,6 @@ export default class StatisticsView extends BaseView {
     const unlockData = [];
     for (let i = 0; i < events.length; i++) {
       if (events[i].event_type.startsWith("Unlocked by")) {
-        // console.log(events[i]);
         unlockData.push({
           name: events[i].event_type.substring(12),
           date: new Date(events[i].timestamp)
@@ -231,9 +227,5 @@ export default class StatisticsView extends BaseView {
 
   yearFunction() {
     this.plotData('year');
-  }
-
-  viewAllFunction() {
-    this.plotData('all');
   }
 }
