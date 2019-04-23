@@ -2,7 +2,8 @@ import Table from '../util/table.js';
 
 import BaseView from './baseView.js';
 
-const HOST = 'https://boiling-reef-89836.herokuapp.com/',
+const LOCK_ID = 11,
+      HOST = 'https://boiling-reef-89836.herokuapp.com/',
       ENDPOINT = 'lock_owners/api/temp_auth/';
 
 export default class VisitorView extends BaseView {
@@ -40,7 +41,7 @@ export default class VisitorView extends BaseView {
       if (visitor_name_string == '') return;
 
       if (confirm(`Are you sure you want to add visitor "${visitor_name_string}"?`))
-        this.postVisitor(1, visitor_name_string);
+        this.postVisitor(LOCK_ID, visitor_name_string);
     });
 
     button_div.appendChild(visitor_add);
@@ -48,6 +49,11 @@ export default class VisitorView extends BaseView {
     visitor_clear.setAttribute('id', 'visitor-clear');
     visitor_clear.setAttribute('type', 'button');
     visitor_clear.setAttribute('value', 'Clear');
+
+    visitor_clear.addEventListener(
+      'click',
+      () => visitor_name.value = ''
+    );
 
     button_div.appendChild(visitor_clear);
 
